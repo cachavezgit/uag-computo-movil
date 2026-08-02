@@ -32,7 +32,31 @@ class ViewController: UIViewController {
 
     /// Se ejecuta al presionar el botón "Convertir a Fahrenheit".
     @IBAction func convertButtonTapped(_ sender: UIButton) {
-        // Aquí se implementará la lógica de conversión de Celsius a Fahrenheit.
+        // Oculta el teclado al presionar el botón.
+        celsiusTextField.resignFirstResponder()
+
+        // 1. Lee el valor ingresado en el campo de texto.
+        // Se acepta la coma como separador decimal (común en teclados en español).
+        guard let text = celsiusTextField.text?
+                .trimmingCharacters(in: .whitespaces)
+                .replacingOccurrences(of: ",", with: "."),
+              let celsius = Double(text) else {
+            resultLabel.text = "Ingresa un número válido"
+            return
+        }
+
+        // 2. Realiza la conversión de Celsius a Fahrenheit.
+        let fahrenheit = celsiusToFahrenheit(celsius)
+
+        // 3. Muestra el resultado en la etiqueta correspondiente.
+        resultLabel.text = String(format: "%.1f °C = %.1f °F", celsius, fahrenheit)
+    }
+
+    // MARK: - Conversión
+
+    /// Convierte grados Celsius a Fahrenheit usando la fórmula: °F = (°C × 9/5) + 32
+    func celsiusToFahrenheit(_ celsius: Double) -> Double {
+        return (celsius * 9.0 / 5.0) + 32.0
     }
 
 }
