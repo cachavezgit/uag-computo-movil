@@ -1,69 +1,81 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13122.16" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24765" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13104.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24743"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="TemperatureConverterApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" ambiguous="YES" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Ingresa la temperatura en grados Celsius:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbl-In-str">
-                                <rect key="frame" x="20" y="84" width="335" height="20.5"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Ingresa la temperatura en grados Celsius:" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbl-In-str">
+                                <rect key="frame" x="20" y="84" width="335" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ej. 25" textAlignment="center" minimumFontSize="17" id="txt-Ce-lin">
-                                <rect key="frame" x="20" y="124.5" width="335" height="34"/>
+                            <textField opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Ej. 25" textAlignment="center" minimumFontSize="17" id="txt-Ce-lin">
+                                <rect key="frame" x="20" y="125" width="335" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numbersAndPunctuation"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="btn-Cn-vrt">
-                                <rect key="frame" x="102" y="188.5" width="171" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="btn-Cn-vrt">
+                                <rect key="frame" x="102" y="189" width="171" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Convertir a Fahrenheit"/>
                                 <connections>
                                     <action selector="convertButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="act-Cv-tap"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Resultado: --" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbl-Re-sul">
-                                <rect key="frame" x="20" y="258.5" width="335" height="24"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="Resultado: --" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lbl-Re-sul">
+                                <rect key="frame" x="20" y="259" width="335" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" xcode11CocoaTouchSystemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="SkX-4s-Qoe"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="lbl-In-str" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="40" id="cst-il-top"/>
-                            <constraint firstItem="lbl-In-str" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cst-il-lea"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lbl-In-str" secondAttribute="trailing" constant="20" id="cst-il-tra"/>
-                            <constraint firstItem="txt-Ce-lin" firstAttribute="top" secondItem="lbl-In-str" secondAttribute="bottom" constant="20" id="cst-tf-top"/>
-                            <constraint firstItem="txt-Ce-lin" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cst-tf-lea"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="txt-Ce-lin" secondAttribute="trailing" constant="20" id="cst-tf-tra"/>
+                            <constraint firstItem="btn-Cn-vrt" firstAttribute="centerX" secondItem="SkX-4s-Qoe" secondAttribute="centerX" id="cst-bt-ctx"/>
                             <constraint firstItem="btn-Cn-vrt" firstAttribute="top" secondItem="txt-Ce-lin" secondAttribute="bottom" constant="30" id="cst-bt-top"/>
-                            <constraint firstItem="btn-Cn-vrt" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="cst-bt-ctx"/>
+                            <constraint firstItem="lbl-In-str" firstAttribute="leading" secondItem="SkX-4s-Qoe" secondAttribute="leading" constant="20" id="cst-il-lea"/>
+                            <constraint firstItem="lbl-In-str" firstAttribute="top" secondItem="SkX-4s-Qoe" secondAttribute="top" constant="40" id="cst-il-top"/>
+                            <constraint firstItem="SkX-4s-Qoe" firstAttribute="trailing" secondItem="lbl-In-str" secondAttribute="trailing" constant="20" id="cst-il-tra"/>
+                            <constraint firstItem="lbl-Re-sul" firstAttribute="leading" secondItem="SkX-4s-Qoe" secondAttribute="leading" constant="20" id="cst-rl-lea"/>
                             <constraint firstItem="lbl-Re-sul" firstAttribute="top" secondItem="btn-Cn-vrt" secondAttribute="bottom" constant="40" id="cst-rl-top"/>
-                            <constraint firstItem="lbl-Re-sul" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="cst-rl-lea"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lbl-Re-sul" secondAttribute="trailing" constant="20" id="cst-rl-tra"/>
+                            <constraint firstItem="SkX-4s-Qoe" firstAttribute="trailing" secondItem="lbl-Re-sul" secondAttribute="trailing" constant="20" id="cst-rl-tra"/>
+                            <constraint firstItem="txt-Ce-lin" firstAttribute="leading" secondItem="SkX-4s-Qoe" secondAttribute="leading" constant="20" id="cst-tf-lea"/>
+                            <constraint firstItem="txt-Ce-lin" firstAttribute="top" secondItem="lbl-In-str" secondAttribute="bottom" constant="20" id="cst-tf-top"/>
+                            <constraint firstItem="SkX-4s-Qoe" firstAttribute="trailing" secondItem="txt-Ce-lin" secondAttribute="trailing" constant="20" id="cst-tf-tra"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
-                        <outlet property="instructionsLabel" destination="lbl-In-str" id="out-il-cnx"/>
                         <outlet property="celsiusTextField" destination="txt-Ce-lin" id="out-tf-cnx"/>
                         <outlet property="convertButton" destination="btn-Cn-vrt" id="out-bt-cnx"/>
+                        <outlet property="instructionsLabel" destination="lbl-In-str" id="out-il-cnx"/>
                         <outlet property="resultLabel" destination="lbl-Re-sul" id="out-rl-cnx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="141" y="131"/>
         </scene>
     </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
 </document>
