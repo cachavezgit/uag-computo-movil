@@ -47,24 +47,15 @@ class DashboardViewController: UIViewController {
     // MARK: - Records
 
     private func loadDeviceRecord() {
+        let device = UIDevice.current
         let deviceRecord = DashboardRecord(
             type: .device,
-            title: "Modelo del dispositivo",
-            detail: deviceModelIdentifier(),
+            title: "Información del dispositivo",
+            detail: "\(device.name) · \(device.model) · \(device.systemName) \(device.systemVersion)",
             timestamp: Date()
         )
-        records.append(deviceRecord)
+        records.insert(deviceRecord, at: 0)
         dashboardTableView.reloadData()
-    }
-
-    private func deviceModelIdentifier() -> String {
-        var systemInfo = utsname()
-        uname(&systemInfo)
-        let machineMirror = Mirror(reflecting: systemInfo.machine)
-        return machineMirror.children.reduce("") { identifier, element in
-            guard let value = element.value as? Int8, value != 0 else { return identifier }
-            return identifier + String(UnicodeScalar(UInt8(value)))
-        }
     }
 
     // MARK: - Actions
