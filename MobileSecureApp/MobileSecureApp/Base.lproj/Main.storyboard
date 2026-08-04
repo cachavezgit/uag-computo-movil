@@ -67,11 +67,57 @@
                         <outlet property="logoImageView" destination="rST-m1-2Xe" id="tbC-fq-PLO"/>
                         <outlet property="titleLabel" destination="eoi-9V-eAq" id="exW-Ch-rkN"/>
                         <outlet property="usernameTextField" destination="6Ak-VI-ajg" id="Tzf-ai-9g0"/>
+                        <segue destination="dashVC01" kind="show" identifier="showDashboard" id="loginToDashSegue"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="81.679389312977094" y="117.60563380281691"/>
+        </scene>
+        <!--Dashboard View Controller-->
+        <scene sceneID="dash-scn-01">
+            <objects>
+                <viewController id="dashVC01" customClass="DashboardViewController" customModule="MobileSecureApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dashTopGuide"/>
+                        <viewControllerLayoutGuide type="bottom" id="dashBottomGuide"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dashRootView">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dashCaptureBtn">
+                                <rect key="frame" x="32" y="60" width="329" height="50"/>
+                                <state key="normal" title="Capturar ubicación"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Capturar ubicación"/>
+                                <connections>
+                                    <action selector="captureLocationButtonTapped:" destination="dashVC01" eventType="touchUpInside" id="dashBtnAction"/>
+                                </connections>
+                            </button>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" translatesAutoresizingMaskIntoConstraints="NO" id="dashTableView">
+                                <rect key="frame" x="0.0" y="126" width="393" height="726"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dashCaptureBtn" firstAttribute="top" secondItem="dashTopGuide" secondAttribute="bottom" constant="16" id="dc01"/>
+                            <constraint firstItem="dashCaptureBtn" firstAttribute="leading" secondItem="dashRootView" secondAttribute="leading" constant="32" id="dc02"/>
+                            <constraint firstItem="dashRootView" firstAttribute="trailing" secondItem="dashCaptureBtn" secondAttribute="trailing" constant="32" id="dc03"/>
+                            <constraint firstItem="dashCaptureBtn" firstAttribute="height" constant="50" id="dc04"/>
+                            <constraint firstItem="dashTableView" firstAttribute="top" secondItem="dashCaptureBtn" secondAttribute="bottom" constant="16" id="dc05"/>
+                            <constraint firstItem="dashTableView" firstAttribute="leading" secondItem="dashRootView" secondAttribute="leading" id="dc06"/>
+                            <constraint firstItem="dashRootView" firstAttribute="trailing" secondItem="dashTableView" secondAttribute="trailing" id="dc07"/>
+                            <constraint firstItem="dashBottomGuide" firstAttribute="top" secondItem="dashTableView" secondAttribute="bottom" id="dc08"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="captureLocationButton" destination="dashCaptureBtn" id="dashOut01"/>
+                        <outlet property="dashboardTableView" destination="dashTableView" id="dashOut02"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dashFirstResp" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="600" y="118"/>
         </scene>
     </scenes>
     <resources>
