@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class DashboardViewController: UIViewController {
 
@@ -15,6 +16,7 @@ class DashboardViewController: UIViewController {
     // MARK: - Properties
 
     var records: [DashboardRecord] = []
+    let locationManager = CLLocationManager()
 
     // MARK: - Lifecycle
 
@@ -42,6 +44,8 @@ class DashboardViewController: UIViewController {
         buttonConfig.baseForegroundColor = .white
         buttonConfig.cornerStyle = .medium
         captureLocationButton.configuration = buttonConfig
+
+        locationManager.delegate = self
     }
 
     // MARK: - Records
@@ -60,8 +64,52 @@ class DashboardViewController: UIViewController {
 
     // MARK: - Actions
 
-    @IBAction func captureLocationButtonTapped(_ sender: UIButton) {
-        // TODO: Implementar captura de ubicación (CoreLocation) en un paso posterior
+    @IBAction func captureLocationTapped(_ sender: UIButton) {
+        switch locationManager.authorizationStatus {
+        case .notDetermined:
+            locationManager.requestWhenInUseAuthorization()
+        case .authorizedWhenInUse, .authorizedAlways:
+            locationManager.requestLocation()
+        case .denied, .restricted:
+            showAlert(title: "Permiso denegado", message: "Habilita el acceso a la ubicación en Ajustes para capturarla.")
+        @unknown default:
+            break
+        }
+    }
+
+    // MARK: - Helper Methods
+
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        present(alert, animated: true)
+    }
+}
+
+// MARK: - CLLocationManagerDelegate
+
+extension DashboardViewController: CLLocationManagerDelegate {
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if manager.authorizationStatus == .authorizedWhenInUse || manager.authorizationStatus == .authorizedAlways {
+            manager.requestLocation()
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return }
+        let locationRecord = DashboardRecord(
+            type: .location,
+            title: "Ubicación capturada",
+            detail: "\(location.coordinate.latitude), \(location.coordinate.longitude)",
+            timestamp: Date()
+        )
+        records.append(locationRecord)
+        dashboardTableView.reloadData()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        showAlert(title: "Error de ubicación", message: error.localizedDescription)
     }
 }
 

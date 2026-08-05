@@ -91,7 +91,7 @@
                                 <state key="normal" title="Capturar ubicación"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Capturar ubicación"/>
                                 <connections>
-                                    <action selector="captureLocationButtonTapped:" destination="dashVC01" eventType="touchUpInside" id="dashBtnAction"/>
+                                    <action selector="captureLocationTapped:" destination="dashVC01" eventType="touchUpInside" id="dashBtnAction"/>
                                 </connections>
                             </button>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" translatesAutoresizingMaskIntoConstraints="NO" id="dashTableView">
