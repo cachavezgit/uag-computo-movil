@@ -5,3 +5,23 @@ xcuserdata/
 *.xccheckout
 DerivedData/
 .DS_Store
+
+# Android / Android Studio / Gradle
+*.iml
+.gradle/
+/local.properties
+**/local.properties
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+*.ap_
+*.dex
