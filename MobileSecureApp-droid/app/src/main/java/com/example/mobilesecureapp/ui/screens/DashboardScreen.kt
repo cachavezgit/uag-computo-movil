@@ -11,6 +11,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -33,6 +34,10 @@ fun DashboardScreen(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val records by viewModel.records.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.loadDeviceMetadata()
+    }
 
     Column(
         modifier = modifier
