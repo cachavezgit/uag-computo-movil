@@ -4,10 +4,11 @@ import android.Manifest
 import android.app.Application
 import android.content.pm.PackageManager
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -53,6 +54,10 @@ fun DashboardScreen(
         contract = ActivityResultContracts.RequestPermission()
     ) { granted -> if (granted) viewModel.captureLocation() }
 
+    val imagePickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri -> uri?.let { viewModel.addImageRecord(it) } }
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -80,9 +85,10 @@ fun DashboardScreen(
                 DashboardRecordItem(record)
             }
         }
-        Row(
+        FlowRow(
             modifier = Modifier.align(Alignment.End),
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Button(onClick = {
                 val granted = ContextCompat.checkSelfPermission(
@@ -95,6 +101,13 @@ fun DashboardScreen(
                 }
             }) {
                 Text("Capturar ubicación")
+            }
+            Button(onClick = {
+                imagePickerLauncher.launch(
+                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                )
+            }) {
+                Text("Seleccionar imagen")
             }
             Button(onClick = onLogoutClick) {
                 Text("Cerrar sesión")

@@ -2,6 +2,7 @@ package com.example.mobilesecureapp.viewmodel
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.net.Uri
 import android.os.Build
 import androidx.lifecycle.AndroidViewModel
 import com.example.mobilesecureapp.model.DashboardRecord
@@ -47,5 +48,13 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    // TODO Paso 7: addImageRecord() — agrega el registro de tipo IMAGE (selector de imágenes)
+    fun addImageRecord(uri: Uri) {
+        val record = DashboardRecord(
+            type = RecordType.IMAGE,
+            title = "Imagen seleccionada",
+            description = uri.lastPathSegment ?: "Imagen",
+            imageUri = uri
+        )
+        _records.value = _records.value + record
+    }
 }

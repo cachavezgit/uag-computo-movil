@@ -1,5 +1,7 @@
 package com.example.mobilesecureapp.ui.components
 
+import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -13,9 +15,16 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -23,6 +32,8 @@ import com.example.mobilesecureapp.R
 import com.example.mobilesecureapp.model.DashboardRecord
 import com.example.mobilesecureapp.model.RecordType
 import com.example.mobilesecureapp.ui.theme.MobileSecureAppTheme
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 private fun accentColor(type: RecordType): Color = when (type) {
     RecordType.DEVICE -> Color(0xFF1976D2)
@@ -74,11 +85,32 @@ fun DashboardRecordItem(
             }
 
             if (record.type == RecordType.IMAGE) {
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = null,
-                    modifier = Modifier.size(40.dp)
-                )
+                val context = LocalContext.current
+                var bitmap by remember(record.imageUri) { mutableStateOf<Bitmap?>(null) }
+
+                LaunchedEffect(record.imageUri) {
+                    val uri = record.imageUri ?: return@LaunchedEffect
+                    bitmap = withContext(Dispatchers.IO) {
+                        ImageDecoder.decodeBitmap(
+                            ImageDecoder.createSource(context.contentResolver, uri)
+                        )
+                    }
+                }
+
+                val currentBitmap = bitmap
+                if (currentBitmap != null) {
+                    Image(
+                        bitmap = currentBitmap.asImageBitmap(),
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                } else {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = null,
+                        modifier = Modifier.size(40.dp)
+                    )
+                }
             }
         }
     }
