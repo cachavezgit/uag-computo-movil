@@ -1,17 +1,23 @@
 package com.example.mobilesecureapp.viewmodel
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.os.Build
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.AndroidViewModel
 import com.example.mobilesecureapp.model.DashboardRecord
 import com.example.mobilesecureapp.model.RecordType
+import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import java.util.Locale
 
-class DashboardViewModel : ViewModel() {
+class DashboardViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _records = MutableStateFlow<List<DashboardRecord>>(emptyList())
     val records: StateFlow<List<DashboardRecord>> = _records.asStateFlow()
+
+    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
     fun loadDeviceMetadata() {
         if (_records.value.any { it.type == RecordType.DEVICE }) return
@@ -23,6 +29,23 @@ class DashboardViewModel : ViewModel() {
         _records.value = listOf(record) + _records.value
     }
 
-    // TODO Paso 6: captureLocation() — agrega el registro de tipo LOCATION (FusedLocationProviderClient)
+    @SuppressLint("MissingPermission") // el permiso se valida en la UI antes de llamar esta función
+    fun captureLocation() {
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+            location ?: return@addOnSuccessListener
+            val record = DashboardRecord(
+                type = RecordType.LOCATION,
+                title = "Ubicación capturada",
+                description = String.format(
+                    Locale.US,
+                    "Lat: %.5f, Lng: %.5f",
+                    location.latitude,
+                    location.longitude
+                )
+            )
+            _records.value = _records.value + record
+        }
+    }
+
     // TODO Paso 7: addImageRecord() — agrega el registro de tipo IMAGE (selector de imágenes)
 }

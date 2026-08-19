@@ -1,6 +1,13 @@
 package com.example.mobilesecureapp.ui.screens
 
+import android.Manifest
+import android.app.Application
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,8 +26,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.mobilesecureapp.ui.components.DashboardRecordItem
 import com.example.mobilesecureapp.ui.theme.MobileSecureAppTheme
@@ -34,10 +43,15 @@ fun DashboardScreen(
 ) {
     var searchQuery by remember { mutableStateOf("") }
     val records by viewModel.records.collectAsState()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.loadDeviceMetadata()
     }
+
+    val locationPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { granted -> if (granted) viewModel.captureLocation() }
 
     Column(
         modifier = modifier
@@ -66,11 +80,25 @@ fun DashboardScreen(
                 DashboardRecordItem(record)
             }
         }
-        Button(
-            onClick = onLogoutClick,
-            modifier = Modifier.align(Alignment.End)
+        Row(
+            modifier = Modifier.align(Alignment.End),
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Text("Cerrar sesión")
+            Button(onClick = {
+                val granted = ContextCompat.checkSelfPermission(
+                    context, Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+                if (granted) {
+                    viewModel.captureLocation()
+                } else {
+                    locationPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+                }
+            }) {
+                Text("Capturar ubicación")
+            }
+            Button(onClick = onLogoutClick) {
+                Text("Cerrar sesión")
+            }
         }
     }
 }
@@ -78,7 +106,11 @@ fun DashboardScreen(
 @Preview(showBackground = true)
 @Composable
 fun DashboardScreenPreview() {
+    val context = LocalContext.current
     MobileSecureAppTheme {
-        DashboardScreen(onLogoutClick = {}, viewModel = DashboardViewModel())
+        DashboardScreen(
+            onLogoutClick = {},
+            viewModel = DashboardViewModel(context.applicationContext as Application)
+        )
     }
 }
