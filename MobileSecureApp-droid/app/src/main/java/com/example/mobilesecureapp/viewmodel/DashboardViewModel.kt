@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Application
 import android.net.Uri
 import android.os.Build
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import com.example.mobilesecureapp.model.DashboardRecord
 import com.example.mobilesecureapp.model.RecordType
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import com.google.android.gms.tasks.CancellationTokenSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -32,8 +35,21 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
 
     @SuppressLint("MissingPermission") // el permiso se valida en la UI antes de llamar esta función
     fun captureLocation() {
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            location ?: return@addOnSuccessListener
+        // getCurrentLocation() en vez de lastLocation: lastLocation devuelve null si el
+        // sistema no tiene una ubicación cacheada reciente (común en emuladores y en el
+        // primer uso en un dispositivo real), dejando el botón sin efecto visible.
+        fusedLocationClient.getCurrentLocation(
+            Priority.PRIORITY_BALANCED_POWER_ACCURACY,
+            CancellationTokenSource().token
+        ).addOnSuccessListener { location ->
+            if (location == null) {
+                Toast.makeText(
+                    getApplication(),
+                    "No se pudo obtener la ubicación, intenta de nuevo",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@addOnSuccessListener
+            }
             val record = DashboardRecord(
                 type = RecordType.LOCATION,
                 title = "Ubicación capturada",
@@ -45,6 +61,12 @@ class DashboardViewModel(application: Application) : AndroidViewModel(applicatio
                 )
             )
             _records.value = _records.value + record
+        }.addOnFailureListener {
+            Toast.makeText(
+                getApplication(),
+                "No se pudo obtener la ubicación, intenta de nuevo",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 
