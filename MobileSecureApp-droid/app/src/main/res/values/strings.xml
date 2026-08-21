@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MobileSecureApp</string>
+    <string name="biometric_prompt_title">Iniciar sesión</string>
+    <string name="biometric_prompt_subtitle">Usa tu huella o rostro para continuar</string>
+    <string name="biometric_prompt_cancel">Cancelar</string>
+    <string name="biometric_auth_failed">Autenticación fallida, intenta de nuevo</string>
+</resources>
